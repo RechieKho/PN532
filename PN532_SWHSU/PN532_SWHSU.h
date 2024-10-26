@@ -2,10 +2,9 @@
 #ifndef __PN532_SWHSU_H__
 #define __PN532_SWHSU_H__
 
+#include <Arduino.h>
 #include <SoftwareSerial.h>
-
-#include "PN532/PN532/PN532Interface.h"
-#include "Arduino.h"
+#include <PN532Interface.h>
 
 #define PN532_SWHSU_DEBUG
 

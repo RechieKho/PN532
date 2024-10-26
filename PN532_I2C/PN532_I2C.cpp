@@ -2,9 +2,9 @@
  * @modified picospuch
  */
 
-#include "PN532_I2C.h"
-#include "PN532_debug.h"
-#include "Arduino.h"
+#include <Arduino.h>
+#include <PN532_I2C.h>
+#include <PN532_debug.h>
 
 #define PN532_I2C_ADDRESS (0x48 >> 1)
 
