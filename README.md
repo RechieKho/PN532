@@ -1,13 +1,13 @@
-## NFC library 
+## Richie's NFC library 
 
 This is an library for PN532 to use NFC technology.
-It is for [NFC Shield](http://goo.gl/Cac2OH) and [Grove - NFC](http://goo.gl/L3Uw5G).
+It is for [NFC Shield](http://goo.gl/Cac2OH) and [Grove - NFC](http://goo.gl/L3Uw5G). This is slightly modified for my own use.
 
 [![NFC Shield](https://statics3.seeedstudio.com/images/113030001%201.jpg)](http://goo.gl/Cac2OH)
 [![Grove - NFC](https://statics3.seeedstudio.com/images/product/grove%20nfc.jpg)](http://goo.gl/L3Uw5G)
 
 ### Features
-+ Support all interfaces of PN532 (I2C, SPI, HSU )
++ Support all interfaces of PN532 (I2C, SPI, HSU)
 + Read/write Mifare Classic Card
 + Works with [Don's NDEF Library](http://goo.gl/jDjsXl)
 + Communicate with android 4.0+([Lists of devices supported](https://github.com/Seeed-Studio/PN532/wiki/List-of-devices-supported))
