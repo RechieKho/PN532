@@ -1,14 +1,5 @@
-/**************************************************************************/
-/*!
-    @file     emulatetag.cpp
-    @author   Armin Wieser
-    @license  BSD
-*/
-/**************************************************************************/
-
-#include "emulatetag.h"
-#include "PN532_debug.h"
-
+#include <emulatetag.h>
+#include <PN532_debug.h>
 #include <string.h>
 
 #define MAX_TGREAD

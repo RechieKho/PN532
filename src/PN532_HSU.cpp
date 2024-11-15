@@ -1,4 +1,3 @@
-
 #include <PN532_HSU.h>
 #include <PN532_debug.h>
 

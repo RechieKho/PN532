@@ -1,17 +1,7 @@
-/**************************************************************************/
-/*!
-    @file     PN532/PN532/emulatetag.h
-    @author   Armin Wieser
-    @license  BSD
-
-    Implemented using NFC forum documents & library of libnfc
-*/
-/**************************************************************************/
-
 #ifndef __EMULATETAG_H__
 #define __EMULATETAG_H__
 
-#include "PN532.h"
+#include <PN532.h>
 
 #define NDEF_MAX_LENGTH 128 // altough ndef can handle up to 0xfffe in size, arduino cannot.
 typedef enum
@@ -34,7 +24,7 @@ public:
   bool emulate(const uint16_t tgInitAsTargetTimeout = 0);
 
   /*
-   * @param uid pointer to byte array of length 3 (uid is 4 bytes - first byte is fixed) or zero for uid 
+   * @param uid pointer to byte array of length 3 (uid is 4 bytes - first byte is fixed) or zero for uid
    */
   void setUid(uint8_t *uid = 0);
 

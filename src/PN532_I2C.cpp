@@ -1,7 +1,3 @@
-/**
- * @modified picospuch
- */
-
 #include <Arduino.h>
 #include <PN532_I2C.h>
 #include <PN532_debug.h>

@@ -1,4 +1,3 @@
-
 #ifndef __PN532_HSU_H__
 #define __PN532_HSU_H__
 
