@@ -1,13 +1,13 @@
 #if 0
 #include <SPI.h>
-#include <PN532/PN532/PN532_SPI.h>
-#include "PN532/PN532/PN532.h"
+#include <PN532_SPI.h>
+#include <PN532.h>
 
   PN532_SPI pn532spi(SPI, 10);
   PN532 nfc(pn532spi);
 #elif 1
-#include <PN532/PN532/PN532_HSU.h>
-#include <PN532/PN532/PN532.h>
+#include <PN532_HSU.h>
+#include <PN532.h>
 
 PN532_HSU pn532hsu(Serial1);
 PN532 nfc(pn532hsu);
@@ -43,7 +43,7 @@ void setup()
   // Set the max number of retry attempts to read from a card
   // This prevents us from waiting forever for a card, which is
   // the default behaviour of the PN532.
-  //nfc.setPassiveActivationRetries(0xFF);
+  // nfc.setPassiveActivationRetries(0xFF);
 
   // configure board to read RFID tags
   nfc.SAMConfig();
@@ -132,7 +132,7 @@ void printResponse(uint8_t *response, uint8_t responseLength)
   {
 
     if (response[i] < 0x10)
-      respBuffer = respBuffer + "0"; //Adds leading zeros if hex value is smaller than 0x10
+      respBuffer = respBuffer + "0"; // Adds leading zeros if hex value is smaller than 0x10
 
     respBuffer = respBuffer + String(response[i], HEX) + " ";
   }

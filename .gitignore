@@ -1,5 +1,4 @@
-*/
-!PN532*
-!NDEF*
+*.local
+**/*.local
 
 .DS_Store
