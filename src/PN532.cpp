@@ -200,8 +200,6 @@ uint32_t PN532::readRegister(uint16_t reg)
 /**************************************************************************/
 uint32_t PN532::writeRegister(uint16_t reg, uint8_t val)
 {
-    uint32_t response;
-
     pn532_packetbuffer[0] = PN532_COMMAND_WRITEREGISTER;
     pn532_packetbuffer[1] = (reg >> 8) & 0xFF;
     pn532_packetbuffer[2] = reg & 0xFF;
@@ -419,10 +417,7 @@ bool PN532::startPassiveTargetIDDetection(uint8_t cardbaudrate)
     pn532_packetbuffer[1] = 1; // max 1 cards at once (we can set this to 2 later)
     pn532_packetbuffer[2] = cardbaudrate;
 
-    if (HAL(writeCommand)(pn532_packetbuffer, 3))
-    {
-        return 0x0; // command failed
-    }
+    return !(bool)(HAL(writeCommand)(pn532_packetbuffer, 3));
 }
 
 /**************************************************************************/
@@ -448,13 +443,13 @@ bool PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t *uid, uint8_t *uid
 
     if (HAL(writeCommand)(pn532_packetbuffer, 3))
     {
-        return 0x0; // command failed
+        return false; // command failed
     }
 
     // read data packet
     if (HAL(readResponse)(pn532_packetbuffer, sizeof(pn532_packetbuffer), timeout) < 0)
     {
-        return 0x0;
+        return false;
     }
 
     // check some basic stuff
@@ -471,7 +466,7 @@ bool PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t *uid, uint8_t *uid
     */
 
     if (pn532_packetbuffer[0] != 1)
-        return 0;
+        return false;
 
     uint16_t sens_res = pn532_packetbuffer[2];
     sens_res <<= 8;
@@ -496,7 +491,7 @@ bool PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t *uid, uint8_t *uid
         inListedTag = pn532_packetbuffer[1];
     }
 
-    return 1;
+    return true;
 }
 
 /***** Mifare Classic Functions ******/
@@ -744,7 +739,7 @@ uint8_t PN532::mifareclassic_WriteNDEFURI(uint8_t sectorNumber, uint8_t uriIdent
     // in NDEF records
 
     // Setup the sector buffer (w/pre-formatted TLV wrapper and NDEF message)
-    uint8_t sectorbuffer1[16] = {0x00, 0x00, 0x03, len + 5, 0xD1, 0x01, len + 1, 0x55, uriIdentifier, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    uint8_t sectorbuffer1[16] = {0x00, 0x00, 0x03, (uint8_t)(len + 5), 0xD1, 0x01, (uint8_t)(len + 1), 0x55, uriIdentifier, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     uint8_t sectorbuffer2[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     uint8_t sectorbuffer3[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     uint8_t sectorbuffer4[16] = {0xD3, 0xF7, 0xD3, 0xF7, 0xD3, 0xF7, 0x7F, 0x07, 0x88, 0x40, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
@@ -887,8 +882,6 @@ uint8_t PN532::mifareultralight_WritePage(uint8_t page, uint8_t *buffer)
 /**************************************************************************/
 bool PN532::inDataExchange(uint8_t *send, uint8_t sendLength, uint8_t *response, uint8_t *responseLength)
 {
-    uint8_t i;
-
     pn532_packetbuffer[0] = 0x40; // PN532_COMMAND_INDATAEXCHANGE;
     pn532_packetbuffer[1] = inListedTag;
 

@@ -6,6 +6,10 @@
 #define DATA_WRITE 1
 #define DATA_READ 3
 
+#ifdef SPI_HAS_TRANSACTION
+const SPISettings PN532_SPI_SETTINGS = SPISettings(2000000, LSBFIRST, SPI_MODE0);
+#endif
+
 PN532_SPI::PN532_SPI(SPIClass &spi, uint8_t ss)
 {
     command = 0;
@@ -16,8 +20,11 @@ PN532_SPI::PN532_SPI(SPIClass &spi, uint8_t ss)
 void PN532_SPI::begin()
 {
     pinMode(_ss, OUTPUT);
-
+    
     _spi->begin();
+#ifndef SPI_HAS_TRANSACTION
+    _spi->beginTransaction(PN532_SPI_SETTINGS);
+#else
     _spi->setDataMode(SPI_MODE0); // PN532 only supports mode0
     _spi->setBitOrder(LSBFIRST);
 #if defined __SAM3X8E__
@@ -28,6 +35,7 @@ void PN532_SPI::begin()
     _spi->setClockDivider(24); // set clock 2MHz(max: 5MHz)
 #else
     _spi->setClockDivider(SPI_CLOCK_DIV8); // set clock 2MHz(max: 5MHz)
+#endif
 #endif
 }
 

@@ -27,8 +27,7 @@ void PN532_HSU::wakeup()
     }
     while (_serial->available())
     {
-        uint8_t ret = _serial->read();
-        DMSG_HEX(ret);
+        DMSG_HEX(_serial->read());
     }
 }
 
@@ -42,8 +41,7 @@ int8_t PN532_HSU::writeCommand(const uint8_t *header, uint8_t hlen, const uint8_
     }
     while (_serial->available())
     {
-        uint8_t ret = _serial->read();
-        DMSG_HEX(ret);
+        DMSG_HEX(_serial->read());
     }
 
     command = header[0];
