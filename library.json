@@ -19,9 +19,6 @@
     }
   ],
   "license": "BSD",
-  "dependencies": {
-    "ownername/print": "~1.3.0"
-  },
   "frameworks": "arduino",
   "platforms": "*"
 }
