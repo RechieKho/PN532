@@ -22,7 +22,7 @@ void PN532_SPI::begin()
     pinMode(_ss, OUTPUT);
     
     _spi->begin();
-#ifndef SPI_HAS_TRANSACTION
+#ifdef SPI_HAS_TRANSACTION
     _spi->beginTransaction(PN532_SPI_SETTINGS);
 #else
     _spi->setDataMode(SPI_MODE0); // PN532 only supports mode0
